@@ -27,7 +27,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button button;
     @FXML
-    private ListView<?> lvPeople;
+    private ListView<String> lvPeople;
     @FXML
     private TextField tfFirstName;
     @FXML
@@ -48,6 +48,30 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleBtnAddPersonClicked(MouseEvent event) {
+        String fullName = tfFirstName.getText() + " " + tfLastName.getText();
+        System.out.println(fullName);
+        lvPeople.getItems().add(fullName);
     }
-  
+    
+    SyncPeopleListView(){
+            // Items inside the list
+    ObservableList<String> items = lvPeople.getItems();
+
+    // Clear out the list
+    items.clear();
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("PopulateListPU");
+        PersonJpaController jpaPerson;
+    jpaPerson = new PersonJpaController(emf);
+
+    List<Person> people = jpaPerson.findPersonEntities();
+
+    }
+    
+        // Add each person to the list
+    for (Person p : people) {
+      String fullName = p.getFirstName() + " " + p.getLastName();
+      lvPeople.getItems().add(fullName);
+    }
+
 }
