@@ -90,7 +90,7 @@ public class FXMLDocumentController implements Initializable {
       String fullName = p.getFirstName() + " " + p.getLastName();
       lvPeople.getItems().add(fullName);
     }
-
+ 
 
     }  
 }
